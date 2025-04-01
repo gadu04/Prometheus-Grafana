@@ -1,0 +1,30 @@
+alertmanager:
+  config:
+    global:
+      resolve_timeout: 5m
+      smtp_smarthost: 'smtp.gmail.com:587'  # Replace with your SMTP server
+      smtp_from: 'bachlx2004@gmail.com'  # Sender email
+      smtp_auth_username: 'bachlx2004@gmail.com'
+      smtp_auth_password: 'hvpjvpvntkutqlko'  # Use an app password if needed
+      smtp_require_tls: true  # Ensure TLS security
+
+    route:
+      receiver: demo-webhook
+      group_wait: 5s
+      group_interval: 10s
+      repeat_interval: 1h
+      routes:
+        - receiver: email-notifications
+          match:
+            severity: critical  # Only send critical alerts to email
+
+    receivers:
+      - name: "null"
+      - name: demo-webhook
+        webhook_configs:
+          - url: "https://webhook.site/874717f6-7ad2-4a7b-990b-5c75ee70b1d5"
+            send_resolved: true
+      - name: email-notifications
+        email_configs:
+          - to: 'bachlx2004@gmail.com'  # Replace with the actual recipient
+            send_resolved: true

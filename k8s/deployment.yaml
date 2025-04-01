@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-example
+  template:
+    metadata:
+      labels:
+        app: docker-example
+    spec:
+      containers:
+        - name: docker-example
+          image: lxbach10012004/docker-example:latest
+          ports:
+            - containerPort: 3000
